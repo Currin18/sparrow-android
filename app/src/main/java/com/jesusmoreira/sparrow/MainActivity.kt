@@ -1,5 +1,8 @@
 package com.jesusmoreira.sparrow
 
+import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -15,6 +18,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.jesusmoreira.sparrow.controllers.TwitterController
+import com.jesusmoreira.sparrow.utils.ImageUtil
+import com.mikhaellopez.circularimageview.CircularImageView
+import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -47,9 +53,39 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        profileImage?.apply {
+            // Set Color
+            circleColor = Color.WHITE
+
+            // Set Border
+            borderWidth = 10f
+            borderColor = Color.BLACK
+
+            // Add Shadow
+            shadowEnable = true
+//            shadowRadius = 7f
+//            shadowColor = Color.RED
+//            shadowGravity = CircularImageView.ShadowGravity.CENTER
+        }
+
         GlobalScope.launch(Dispatchers.Default) {
-            val user = twitterController.getUserProfile()
-            Log.d("TAG", "onCreate: ${user?.name}")
+            twitterController.getUserProfile()?.let {user ->
+                Log.d("TAG", "onCreate: ${user.name}")
+
+                val bitmapProfile = user.profileImageURLHttps?.let {
+                    ImageUtil.getBitmapFromURL(it)
+                }
+                val bitmapBackground = user.profileBannerURL?.let {
+                    ImageUtil.getBitmapFromURL(it)
+                }
+
+                GlobalScope.launch(Dispatchers.Main) {
+                    profileName.text = user.name
+                    profileNick.text = "@${user.screenName}"
+                    bitmapProfile?.let { profileImage.setImageBitmap(it) }
+                    bitmapBackground?.let { profileHeader.background = BitmapDrawable(resources, it) }
+                }
+            }
         }
     }
 
