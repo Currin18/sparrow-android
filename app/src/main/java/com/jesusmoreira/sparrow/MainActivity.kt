@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar
 import com.jesusmoreira.sparrow.controllers.TwitterController
 import com.jesusmoreira.sparrow.utils.ImageUtil
 import com.mikhaellopez.circularimageview.CircularImageView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -82,8 +83,13 @@ class MainActivity : AppCompatActivity() {
                 GlobalScope.launch(Dispatchers.Main) {
                     profileName.text = user.name
                     profileNick.text = "@${user.screenName}"
+
                     bitmapProfile?.let { profileImage.setImageBitmap(it) }
                     bitmapBackground?.let { profileHeader.background = BitmapDrawable(resources, it) }
+
+                    profileFriendsCount.text = user.friendsCount.toString()
+                    profileFollowersCount.text = user.followersCount.toString()
+                    profileDMCount.text = 0.toString()
                 }
             }
         }
