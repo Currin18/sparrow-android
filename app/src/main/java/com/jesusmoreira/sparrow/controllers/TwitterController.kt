@@ -80,31 +80,11 @@ class TwitterController(val context: Context) {
 
     suspend fun getUserProfile() = withContext(Dispatchers.IO) {
         twitter?.verifyCredentials()
-    }?.let { User(it) }
+    }//?.let { User(it) }
 
-//        // Twitter Id
-//        val twitterId = user.id.toString()
-//        Log.d("Twitter Id: ", twitterId)
-//
-//        //Twitter Handle
-//        val twitterHandle = user.screenName
-//        Log.d("Twitter Handle: ", twitterHandle)
-//
-//        //Twitter Name
-//        val twitterName = user.name
-//        Log.d("Twitter Name: ", twitterName)
-//
-//        //Twitter Email
-//        val twitterEmail = user.email
-//        Log.d("Twitter Email: ",
-//            twitterEmail
-//                ?: "'Request email address from users' on the Twitter dashboard is disabled"
-//        )
-//
-//        // Twitter Profile Pic URL
-//        val twitterProfilePic = user.profileImageURLHttps.replace("_normal", "")
-//        Log.d("Twitter Profile URL: ", twitterProfilePic)
-//    }
+    suspend fun getTimeline() = withContext(Dispatchers.IO) {
+        twitter?.timelines()
+    }
 
     // Show twitter login page in a dialog
     @SuppressLint("SetJavaScriptEnabled")

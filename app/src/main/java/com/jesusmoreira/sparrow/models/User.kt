@@ -1,6 +1,8 @@
 package com.jesusmoreira.sparrow.models
 
 import twitter4j.User
+import java.util.*
+import kotlin.collections.ArrayList
 
 data class User (
     val id: Long,
@@ -11,7 +13,7 @@ data class User (
     val description: String = "",
     val url: String? = "",
 //    val status: Status?,
-//    val createdAt: Date?
+    val createdAt: Date? = null,
     val utcOffset: Int = 0,
     val timeZone: String? = "",
     val lang: String? = "",
@@ -57,7 +59,7 @@ data class User (
         user.description,
         user.url,
 //        user.status,
-//        user.createdAt
+        user.createdAt,
         user.utcOffset,
         user.timeZone,
         user.lang,

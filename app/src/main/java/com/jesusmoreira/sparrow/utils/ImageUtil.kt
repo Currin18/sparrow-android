@@ -6,9 +6,9 @@ import java.net.URL
 
 
 object ImageUtil {
-    suspend fun getBitmapFromURL(url: String): Bitmap? =
-        getBitmapFromURL(URL(url))
+    suspend fun getBitmapFromURL(url: String?): Bitmap? =
+        url?.let { getBitmapFromURL(URL(it)) }
 
-    suspend fun getBitmapFromURL(url: URL): Bitmap? =
-        BitmapFactory.decodeStream(url.openConnection().getInputStream())
+    suspend fun getBitmapFromURL(url: URL?): Bitmap? =
+        url?.let { BitmapFactory.decodeStream(it.openConnection().getInputStream()) }
 }

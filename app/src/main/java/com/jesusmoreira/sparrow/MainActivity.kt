@@ -25,11 +25,17 @@ import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import twitter4j.Paging
+import twitter4j.User
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        const val TAG = "MainActivity"
+    }
+
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var twitterController: TwitterController
+    lateinit var twitterController: TwitterController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,43 +60,10 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        profileImage?.apply {
-            // Set Color
-            circleColor = Color.WHITE
-
-            // Set Border
-            borderWidth = 10f
-            borderColor = Color.BLACK
-
-            // Add Shadow
-            shadowEnable = true
-//            shadowRadius = 7f
-//            shadowColor = Color.RED
-//            shadowGravity = CircularImageView.ShadowGravity.CENTER
-        }
-
         GlobalScope.launch(Dispatchers.Default) {
             twitterController.getUserProfile()?.let {user ->
-                Log.d("TAG", "onCreate: ${user.name}")
-
-                val bitmapProfile = user.profileImageURLHttps?.let {
-                    ImageUtil.getBitmapFromURL(it)
-                }
-                val bitmapBackground = user.profileBannerURL?.let {
-                    ImageUtil.getBitmapFromURL(it)
-                }
-
-                GlobalScope.launch(Dispatchers.Main) {
-                    profileName.text = user.name
-                    profileNick.text = "@${user.screenName}"
-
-                    bitmapProfile?.let { profileImage.setImageBitmap(it) }
-                    bitmapBackground?.let { profileHeader.background = BitmapDrawable(resources, it) }
-
-                    profileFriendsCount.text = user.friendsCount.toString()
-                    profileFollowersCount.text = user.followersCount.toString()
-                    profileDMCount.text = 0.toString()
-                }
+                Log.d(TAG, "getUserProfile: ${user.name}")
+                fillUser(user)
             }
         }
     }
@@ -104,5 +77,26 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private suspend fun fillUser(user: User) {
+        val bitmapProfile = user.profileImageURLHttps.replace("_normal", "")?.let {
+            ImageUtil.getBitmapFromURL(it)
+        }
+        val bitmapBackground = user.profileBannerURL?.let {
+            ImageUtil.getBitmapFromURL(it)
+        }
+
+        GlobalScope.launch(Dispatchers.Main) {
+            profileName.text = user.name
+            profileNick.text = "@${user.screenName}"
+
+            bitmapProfile?.let { profileImage.setImageBitmap(it) }
+            bitmapBackground?.let { profileHeader.background = BitmapDrawable(resources, it) }
+
+            profileFriendsCount.text = user.friendsCount.toString()
+            profileFollowersCount.text = user.followersCount.toString()
+            profileDMCount.text = 0.toString()
+        }
     }
 }
