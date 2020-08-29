@@ -26,18 +26,18 @@ class LogInActivity : AppCompatActivity() {
 
         twitterController = TwitterController(this)
 
-        GlobalScope.launch {
-            val results = GlobalScope.async { twitterController.isLoggedIn() }
-            val result = results.await()
-            if (result) {
-                // Show the Activity with the logged in user
-                Log.d(TAG, "LoggedIn?: YES")
-                startActivity(Intent(this@LogInActivity, MainActivity::class.java))
-            } else {
-                // Show the LogInActivity
-                Log.d(TAG, "LoggedIn?: NO")
-            }
-        }
+//        GlobalScope.launch {
+//            val results = GlobalScope.async { twitterController.isLoggedIn() }
+//            val result = results.await()
+//            if (result) {
+//                // Show the Activity with the logged in user
+//                Log.d(TAG, "LoggedIn?: YES")
+//                startActivity(Intent(this@LogInActivity, MainActivity::class.java))
+//            } else {
+//                // Show the LogInActivity
+//                Log.d(TAG, "LoggedIn?: NO")
+//            }
+//        }
     }
 
     fun logInAccount(view: View) {

@@ -3,11 +3,13 @@ package com.jesusmoreira.sparrow.controllers
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.jesusmoreira.sparrow.SplashActivity
 import com.jesusmoreira.sparrow.models.TwitterConstants
 import com.jesusmoreira.sparrow.models.User
 import com.jesusmoreira.sparrow.utils.PreferencesUtil
@@ -146,6 +148,8 @@ class TwitterController(val context: Context) {
                 // This will allow us to check user's logging state every time they open the app after cold start.
                 PreferencesUtil.setOauthToken(context, accToken?.token ?: "")
                 PreferencesUtil.setOauthTokenSecret(context, accToken?.tokenSecret ?: "")
+
+                context.startActivity(Intent(context, SplashActivity::class.java))
             }
         }
     }

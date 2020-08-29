@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/profile_name"
+            android:text="@string/default_profile_name"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textAlignment="textStart"
             android:textSize="16sp"/>
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/profile_nick"
+            android:text="@string/default_profile_nick"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textAlignment="textStart"
             android:textSize="14sp"/>

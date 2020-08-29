@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="4dp">
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:orientation="vertical">
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/tweetProfileImage"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <TextView
+            android:id="@+id/tweetProfileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            app:layout_constraintTop_toTopOf="@+id/tweetProfileImage"
+            app:layout_constraintStart_toEndOf="@+id/tweetProfileImage"
+            android:text="@string/default_profile_name"/>
+        <TextView
+            android:id="@+id/tweetProfileNick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            app:layout_constraintTop_toTopOf="@+id/tweetProfileName"
+            app:layout_constraintStart_toEndOf="@+id/tweetProfileName"
+            android:text="@string/default_profile_nick"/>
+
         <TextView
             android:id="@+id/tweetText"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="text"/>
-    </LinearLayout>
+            android:layout_marginStart="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/tweetProfileName"
+            app:layout_constraintStart_toEndOf="@+id/tweetProfileImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/default_profile_nick"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
